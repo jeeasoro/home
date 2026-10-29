@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title data-en="[Ihr Name] – Projects">J. R. – Projekte</title>
+<title data-en="[Ihr Name] – Projects">[Ihr Name] – Projekte</title>
 <meta name="description" content="Projekte, die direkt im Browser laufen: ein Videoeditor, Code-Editoren und Musik-Werkzeuge." data-en-content="Projects that run right in the browser: a video editor, code editors and music tools.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23c8231c'/%3E%3C/svg%3E">
 <script>
@@ -47,6 +47,10 @@
 	--frame: #1b1d22;
 	--shadow: 0 1px 2px rgb(22 25 31 / 0.05), 0 6px 20px rgb(22 25 31 / 0.05);
 	--soft: color-mix(in srgb, var(--accent) 11%, var(--surface));
+	/* Welches Bild des Editors zu sehen ist (siehe .feature img). */
+	--shot-light: block;
+	--shot-dark: none;
+	--shot-warm: none;
 	color-scheme: light;
 }
 :root[data-theme="dark"] {
@@ -59,6 +63,8 @@
 	--on-accent: #16191f;
 	--frame: #000000;
 	--shadow: none;
+	--shot-light: none;
+	--shot-dark: block;
 	color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
@@ -73,6 +79,8 @@
 		--on-accent: #16191f;
 		--frame: #000000;
 		--shadow: none;
+		--shot-light: none;
+		--shot-dark: block;
 		color-scheme: dark;
 	}
 }
@@ -86,6 +94,8 @@
 	--on-accent: #ffffff;
 	--frame: #2a2119;
 	--shadow: 0 1px 2px rgb(60 40 20 / 0.06), 0 6px 20px rgb(60 40 20 / 0.06);
+	--shot-light: none;
+	--shot-warm: block;
 	color-scheme: light;
 }
 
@@ -272,11 +282,15 @@ h1 {
 	border-radius: 12px;
 }
 .feature img {
-	display: block;
 	width: 100%;
 	height: auto;
 	border-radius: 8px;
 }
+/* Ein Bild je Farbschema, sichtbar ist nur das passende. Die anderen lädt der Browser
+   dank loading="lazy" erst, wenn jemand das Farbschema wechselt. */
+.feature img.light { display: var(--shot-light); }
+.feature img.dark { display: var(--shot-dark); }
+.feature img.warm { display: var(--shot-warm); }
 .feature-text { padding: 0.5rem 0.75rem 0.5rem 0; }
 .feature h2 {
 	margin: 0 0 0.6rem;
@@ -408,7 +422,7 @@ h1 {
 <div class="page">
 
 	<header class="top">
-		<a class="name" href="./">J. R.</a>
+		<a class="name" href="./">[Ihr Name]</a>
 		<div class="controls">
 			<div class="seg" role="group" aria-label="Sprache" data-en-aria-label="Language">
 				<button type="button" data-set-lang="de" title="Deutsch">DE</button>
@@ -429,21 +443,27 @@ h1 {
 	</header>
 
 	<section class="intro">
-		<p class="hello"><span lang="de">Willkommen auf meiner Webseite</span><span lang="en">Welcome to my Website</span></p>
+		<p class="hello"><span lang="de">Hallo, ich bin</span><span lang="en">Hi, I'm</span> [Ihr Name] <span aria-hidden="true">👋</span></p>
 		<h1>
 			<span lang="de">Ich baue Werkzeuge, die direkt im Browser laufen.</span>
 			<span lang="en">I build tools that run right in your browser.</span>
 		</h1>
 		<p class="lead" lang="de">Ich studiere Medieninformatik im 2. Semester. Hier sind meine Projekte, vom Videoeditor bis zum Stimmgerät. Alle laufen ohne Installation und ohne Konto: einfach auf „Öffnen“ klicken.</p>
 		<p class="lead" lang="en">I'm a second-semester Media Informatics student. These are my projects, from a video editor to an instrument tuner. They all run without installing anything or creating an account – just click “Open”.</p>
-		<p class="aside" lang="de">Die meisten sind gemeinsam mit KI-Agenten wie Claude Code entstanden. Die meisten sind noch nicht vollendet!</p>
-		<p class="aside" lang="en">Most of them were built together with AI agents like Claude Code. Most are not yet finished!</p>
+		<p class="aside" lang="de">Die meisten sind gemeinsam mit KI-Agenten wie Claude Code entstanden.</p>
+		<p class="aside" lang="en">Most of them were built together with AI agents like Claude Code.</p>
 	</section>
 
 	<!-- Hauptprojekt. Name des Editors und Repository: siehe README. -->
 	<section class="feature" aria-labelledby="editor">
 		<figure>
-			<img src="img/videoeditor.webp" width="1800" height="1125"
+			<img class="light" src="img/videoeditor-light.webp" width="1800" height="1125" loading="lazy"
+				alt="Die Oberfläche des Videoeditors: Medienbereich, Vorschau, Inspector, Timeline und Mixer"
+				data-en-alt="The video editor's interface: media bin, preview, inspector, timeline and mixer">
+			<img class="dark" src="img/videoeditor.webp" width="1800" height="1125" loading="lazy"
+				alt="Die Oberfläche des Videoeditors: Medienbereich, Vorschau, Inspector, Timeline und Mixer"
+				data-en-alt="The video editor's interface: media bin, preview, inspector, timeline and mixer">
+			<img class="warm" src="img/videoeditor-warm.webp" width="1800" height="1125" loading="lazy"
 				alt="Die Oberfläche des Videoeditors: Medienbereich, Vorschau, Inspector, Timeline und Mixer"
 				data-en-alt="The video editor's interface: media bin, preview, inspector, timeline and mixer">
 		</figure>
@@ -452,7 +472,7 @@ h1 {
 				<span class="badge"><span lang="de">Hauptprojekt</span><span lang="en">Main project</span></span>
 				<span class="badge wip"><span lang="de">In Arbeit</span><span lang="en">Work in progress</span></span>
 			</p>
-			<h2 id="editor">Silverhour</h2>
+			<h2 id="editor">[Name des Editors]</h2>
 			<p lang="de">Ein Videoeditor im Browser, gedacht als kostenlose Alternative zu After Effects oder der Studio-Version von DaVinci Resolve.</p>
 			<p lang="en">A video editor in the browser, meant as a free alternative to After Effects or the Studio version of DaVinci Resolve.</p>
 			<ul class="points" lang="de">
@@ -467,7 +487,7 @@ h1 {
 			</ul>
 			<ul class="tags"><li>TypeScript</li><li>Svelte</li><li>WebGPU</li></ul>
 			<div class="links">
-				<a class="btn open" href="/silverhour/"><span lang="de">Öffnen</span><span lang="en">Open</span><span class="sr"> [Name des Editors]</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+				<a class="btn open" href="/video-editor/"><span lang="de">Öffnen</span><span lang="en">Open</span><span class="sr"> [Name des Editors]</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
 			</div>
 		</div>
 	</section>
@@ -488,7 +508,7 @@ h1 {
 				<p lang="en">HTML, CSS and JavaScript side by side, with suggestions for all three languages and a preview where you can drag elements around.</p>
 				<ul class="tags"><li>JavaScript</li></ul>
 				<div class="links">
-					<a class="btn open" href="/web-editor/app/"><span lang="de">Öffnen</span><span lang="en">Open</span><span class="sr"> Web Studio</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+					<a class="btn open" href="/web-studio/app/"><span lang="de">Öffnen</span><span lang="en">Open</span><span class="sr"> Web Studio</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
 				</div>
 			</li>
 			<li class="card">
@@ -500,7 +520,7 @@ h1 {
 				<p lang="en">A Markdown editor with an outline and a preview, all in a single HTML file.</p>
 				<ul class="tags"><li>JavaScript</li></ul>
 				<div class="links">
-					<a class="btn open" href="/markdown-studio/"><span lang="de">Öffnen</span><span lang="en">Open</span><span class="sr"> Markdown Studio</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+					<a class="btn open" href="/markdown-studio/markdown-studio.html"><span lang="de">Öffnen</span><span lang="en">Open</span><span class="sr"> Markdown Studio</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
 				</div>
 			</li>
 			<li class="card">
@@ -546,7 +566,7 @@ h1 {
 				<p lang="en">A music player for your phone with playlists from your own files, background sounds like rain or waves and a 6-band equalizer. Nothing gets uploaded.</p>
 				<ul class="tags"><li>Web Audio</li><li lang="de">Offline nutzbar</li><li lang="en">Works offline</li></ul>
 				<div class="links">
-					<a class="btn open" href="/mp3-player/"><span lang="de">Öffnen</span><span lang="en">Open</span><span class="sr"> Folder Player</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+					<a class="btn open" href="/folder-player/"><span lang="de">Öffnen</span><span lang="en">Open</span><span class="sr"> Folder Player</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
 				</div>
 			</li>
 			<li class="card">
@@ -558,7 +578,7 @@ h1 {
 				<p lang="en">The web version of my iPhone app Lumen: take or open photos and edit them in layers with sliders for light, color and detail.</p>
 				<ul class="tags"><li>JavaScript</li><li lang="de">Eine HTML-Datei</li><li lang="en">Single HTML file</li></ul>
 				<div class="links">
-					<a class="btn open" href="/lumen/"><span lang="de">Öffnen</span><span lang="en">Open</span><span class="sr"> Lumen Darkroom</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+					<a class="btn open" href="/lumen/web/"><span lang="de">Öffnen</span><span lang="en">Open</span><span class="sr"> Lumen Darkroom</span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
 				</div>
 			</li>
 		</ul>
